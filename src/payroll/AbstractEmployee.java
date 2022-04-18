@@ -1,15 +1,16 @@
 package payroll;
 
 public abstract class AbstractEmployee {
+	
 	private final String firstName;
 	private final String lastName;
 	private final String socialSecurityNumber;
 
 	// Constructors of abstract classes can only be called in constructors of their subclasses. So there is no point in making them public. The protected modifier should be enough.
-	protected AbstractEmployee(String fName, String lName, String socialSecNumber) {
-		firstName = fName;
-		lastName = lName;
-		socialSecurityNumber = socialSecNumber;
+	protected AbstractEmployee(String firstName, String lastName, String socialSecurityNumber) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.socialSecurityNumber = socialSecurityNumber;
 	}
 
 	public String getFirstName() {
@@ -29,5 +30,6 @@ public abstract class AbstractEmployee {
 		return String.format("%s %s%nsocial security number: %s", getFirstName(), getLastName(), getSocialSecurityNumber());
 	}
 	
-	public abstract double earnings(); // abstract method must be overridden by concrete subclass. No implementation here
+	// gets weekly earnings for an employee
+	abstract String obtainWeeklyEarnings(); // abstract method must be overridden by concrete subclass. No implementation here
 }
