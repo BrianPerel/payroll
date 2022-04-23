@@ -3,11 +3,15 @@ package payroll;
 public class BasePlusCommissionEmployee extends CommissionEmployee {
 
 	private double baseSalary;
+	
+	public BasePlusCommissionEmployee(int employeeId) {
+		this(employeeId, "EMPTY", "EMPTY", "EMPTY", "EMPTY", "EMPTY", 0, 0.01, 0); // constructor calls below constructor passing in these values to allow the creation of an object without any attribute values
+	}
 
-	public BasePlusCommissionEmployee(String firstName, String lastName, String socialSecurityNumber, double grossSales,
+	public BasePlusCommissionEmployee(int employeeId, String firstName, String lastName, String address, String phoneNumber, String socialSecurityNumber, double grossSales,
 			double commissionRate, double baseSalary) {
 
-		super(firstName, lastName, socialSecurityNumber, grossSales, commissionRate);
+		super(employeeId, firstName, lastName, address, phoneNumber, socialSecurityNumber, grossSales, commissionRate);
 
 		if (baseSalary < 0.0) {
 			throw new IllegalArgumentException("Base salary must be greater than or equal to 0.0");
@@ -29,12 +33,15 @@ public class BasePlusCommissionEmployee extends CommissionEmployee {
 	}
 
 	@Override
-	public String obtainWeeklyEarnings() {
-		return String.format("%s: $%,.2f", "Weekly pay", getBaseSalary() + super.obtainWeeklyEarnings());
+	public double calculateWeeklyEarnings() {
+		return getBaseSalary() + (getCommissionRate() * getGrossSales());
 	}
 
 	@Override
 	public String toString() {
-		return String.format("%s %s %n%s: $%,.2f", "Base-salaried", super.toString(), "base salary", getBaseSalary());
+		return String.format("%s %s %n%s: $%,.2f%n%s: $%,.2f", 
+				"Base-salaried", super.toString(),
+				"base salary", getBaseSalary(), 
+				"weekly pay", calculateWeeklyEarnings());
 	}
 }

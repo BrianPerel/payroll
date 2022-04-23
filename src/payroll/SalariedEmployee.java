@@ -4,8 +4,8 @@ public class SalariedEmployee extends AbstractEmployee {
 	
 	private double weeklySalary;
 	
-	public SalariedEmployee(String firstName, String lastName, String socialSecurityNumber, double weeklySalary) {
-		super(firstName, lastName, socialSecurityNumber);
+	public SalariedEmployee(int employeeId, String firstName, String lastName, String address, String phoneNumber, String socialSecurityNumber, double weeklySalary) {
+		super(employeeId, firstName, lastName, address, phoneNumber, socialSecurityNumber);
 		
 		if(weeklySalary < 0.0) {
 			throw new IllegalArgumentException(
@@ -24,13 +24,15 @@ public class SalariedEmployee extends AbstractEmployee {
 	}
 
 	@Override
-	public String obtainWeeklyEarnings() {
-		return String.format("%s: $%,.2f", "Weekly pay", getWeeklySalary());
+	public double calculateWeeklyEarnings() {
+		return getWeeklySalary();
 	}
 	
 	@Override
 	public String toString() {
-		return String.format("Salaried employee: %s%n%s: $%,.2f",
-				super.toString(), "weekly salary", getWeeklySalary());
+		return String.format("%s: %s%n%s: $%,.2f%n%s: $%,.2f",
+				"Salaried employee", super.toString(),
+				"weekly salary", getWeeklySalary(),
+				"weekly pay", calculateWeeklyEarnings());
 	}
 }

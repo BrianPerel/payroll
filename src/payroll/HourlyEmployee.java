@@ -5,8 +5,8 @@ public class HourlyEmployee extends AbstractEmployee {
 	private double wage; // wage per hour
 	private double hours; // hours worked for week
 
-	public HourlyEmployee(String firstName, String lastName, String socialSecurityNumber, double wage, double hours) {
-		super(firstName, lastName, socialSecurityNumber);
+	public HourlyEmployee(int employeeId, String firstName, String lastName, String address, String phoneNumber, String socialSecurityNumber, double wage, double hours) {
+		super(employeeId, firstName, lastName, address, phoneNumber, socialSecurityNumber);
 
 		if (wage < 0.0) {
 			throw new IllegalArgumentException("Hourly wage must be greater than or equal to 0.0");
@@ -47,14 +47,16 @@ public class HourlyEmployee extends AbstractEmployee {
 	}
 
 	@Override
-	public String obtainWeeklyEarnings() {
-		return String.format("%s: $%,.2f", "Weekly pay", (getHours() <= 40) ? (getWage() * getHours()) : (40 * getWage() + (getHours() - 40) * getWage() * 1.5));
+	public double calculateWeeklyEarnings() {
+		return getHours() <= 40 ? (getWage() * getHours()) : (40 * getWage() + (getHours() - 40) * getWage() * 1.5);
 	}
 	
 	@Override
 	public String toString() {
-		return String.format("Hourly employee: %s%n%s: $%,.2f %n%s: %,.2f",
-				super.toString(), "hourly salary", getWage(),
-				"hours worked", getHours());
+		return String.format("%s: %s%n%s: $%,.2f %n%s: %,.2f%n%s: $%,.2f",
+				"Hourly employee", super.toString(),
+				"hourly salary", getWage(),
+				"hours worked", getHours(),
+				"weekly pay", calculateWeeklyEarnings());
 	}
 }
