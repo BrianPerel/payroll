@@ -1,4 +1,6 @@
-package payroll;
+package com.payroll;
+
+import java.util.Objects;
 
 public class HourlyEmployee extends AbstractEmployee {
 
@@ -58,5 +60,26 @@ public class HourlyEmployee extends AbstractEmployee {
 				"hourly salary", getWage(),
 				"hours worked", getHours(),
 				"weekly pay", calculateWeeklyEarnings());
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Objects.hash(hours, wage);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		HourlyEmployee other = (HourlyEmployee) obj;
+		return Double.doubleToLongBits(hours) == Double.doubleToLongBits(other.hours)
+				&& Double.doubleToLongBits(wage) == Double.doubleToLongBits(other.wage);
 	}
 }

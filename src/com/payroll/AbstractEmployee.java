@@ -1,4 +1,4 @@
-package payroll;
+package com.payroll;
 
 public abstract class AbstractEmployee {
 	

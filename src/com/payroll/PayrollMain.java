@@ -1,4 +1,4 @@
-package payroll;
+package com.payroll;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,9 +14,21 @@ import java.util.List;
 public class PayrollMain {
 	public static void main(String[] args) {
 		PayrollMain payrollSystem = new PayrollMain();
+		
 		List<AbstractEmployee> employees = payrollSystem.displayAllEmployees(payrollSystem);
 		payrollSystem.performSalaryRaise(employees);
-		payrollSystem.getEmployeeTypes(employees);			
+		payrollSystem.getEmployeeTypes(employees);	
+		
+		// find the employee who has a weekly pay of exactly $700.00
+		// find an element matching specific criteria in a given list: invoke stream() on the list, then call the filter() method with a proper Predicate, then call the findAny() construct, which returns the first element that matches the filter predicate wrapped in an Optional if such an element exists
+		AbstractEmployee hasHighWeeklyPay = employees.stream()
+			  .filter(employee -> employee.calculateWeeklyEarnings() == 700.00)
+			  .findAny()
+			  .orElse(null);
+	
+		if(hasHighWeeklyPay != null) {
+			System.out.println("\n\n" + hasHighWeeklyPay.getFirstName().concat(" " + hasHighWeeklyPay.getLastName().concat(" has a weekly pay of $700.00")));
+		}
 	}
 
 	public void performSalaryRaise(List<AbstractEmployee> employees) {
@@ -38,7 +50,7 @@ public class PayrollMain {
 
 	public List<AbstractEmployee> displayAllEmployees(PayrollMain payrollSystem) {
 		AbstractEmployee salariedEmployee1 = new SalariedEmployee(1, "Raymond", "Benson", "23 New way, Miami, FL", "(508)-324-3453", "454-23-2342", 1500.00), 
-				hourlyEmployee1 = new HourlyEmployee(2, "Micheal", "Richards", "67 Overview Drive, Big City, FL", "(456)-123-5464", "878-42-1233", 30, 40),
+				hourlyEmployee1 = new HourlyEmployee(2, "Micheal", "Richards", "43 Overview Drive, Big City, FL", "(456)-123-5464", "878-42-1233", 30, 40),
 				hourlyEmployee2 = new HourlyEmployee(3, "David", "Micheals", "67 Lake View, Dripping Springs, TX", "(789)-345-5674", "234-54-5683", 10, 60),
 				commissionEmployee1 = new CommissionEmployee(4, "Mathew", "Costello", "45 Big Circle, Little Town, ID", "(567)-435-4564", "677-45-2342", 10000, 0.10),
 				basePlusCommissionEmployee1 = new BasePlusCommissionEmployee(5, "Eric", "Nylund", "87 Beverly Hills, Los Angeles, CA", "(546)-234-4564", "932-34-5673", 10000, 0.20, 300),
@@ -65,4 +77,6 @@ public class PayrollMain {
 	public AbstractEmployee createEmptyEmployee(int employeeId) {
 		return new BasePlusCommissionEmployee(employeeId);
 	}
+	
+	
 }

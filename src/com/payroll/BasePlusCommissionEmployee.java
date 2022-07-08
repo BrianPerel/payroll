@@ -1,4 +1,6 @@
-package payroll;
+package com.payroll;
+
+import java.util.Objects;
 
 public class BasePlusCommissionEmployee extends CommissionEmployee {
 
@@ -10,7 +12,6 @@ public class BasePlusCommissionEmployee extends CommissionEmployee {
 
 	public BasePlusCommissionEmployee(int employeeId, String firstName, String lastName, String address, String phoneNumber, String socialSecurityNumber, double grossSales,
 			double commissionRate, double baseSalary) {
-
 		super(employeeId, firstName, lastName, address, phoneNumber, socialSecurityNumber, grossSales, commissionRate);
 
 		if (baseSalary < 0.0) {
@@ -19,7 +20,7 @@ public class BasePlusCommissionEmployee extends CommissionEmployee {
 
 		this.baseSalary = baseSalary;
 	}
-
+	
 	public double getBaseSalary() {
 		return baseSalary;
 	}
@@ -43,5 +44,25 @@ public class BasePlusCommissionEmployee extends CommissionEmployee {
 				"Base-salaried", super.toString(),
 				"base salary", getBaseSalary(), 
 				"weekly pay", calculateWeeklyEarnings());
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Objects.hash(baseSalary);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BasePlusCommissionEmployee other = (BasePlusCommissionEmployee) obj;
+		return Double.doubleToLongBits(baseSalary) == Double.doubleToLongBits(other.baseSalary);
 	}
 }

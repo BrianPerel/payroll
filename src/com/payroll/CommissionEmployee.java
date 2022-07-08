@@ -1,4 +1,6 @@
-package payroll;
+package com.payroll;
+
+import java.util.Objects;
 
 public class CommissionEmployee extends AbstractEmployee {
 	
@@ -23,7 +25,7 @@ public class CommissionEmployee extends AbstractEmployee {
 	public double getGrossSales() {
 		return grossSales;
 	}
-
+	
 	public void setGrossSales(double grossSales) {
 		this.grossSales = grossSales;
 	}
@@ -48,5 +50,26 @@ public class CommissionEmployee extends AbstractEmployee {
 				"gross sales", getGrossSales(),
 				"commission rate", String.valueOf((int) (getCommissionRate() * 100)).concat("%"),
 				"weekly pay", calculateWeeklyEarnings());
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Objects.hash(commissionRate, grossSales);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CommissionEmployee other = (CommissionEmployee) obj;
+		return Double.doubleToLongBits(commissionRate) == Double.doubleToLongBits(other.commissionRate)
+				&& Double.doubleToLongBits(grossSales) == Double.doubleToLongBits(other.grossSales);
 	}
 }
